@@ -72,9 +72,5 @@ int main(){
         detect_move();
     }
     
-    
-
-
-
     return 0;
 };
