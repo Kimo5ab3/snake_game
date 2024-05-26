@@ -4,7 +4,7 @@
 
 const int WIDTH = 50;
 const int HEIGHT = 20;
-int game_over = 1;
+int game_over = 0;
 enum Direction {
     UP,
     DOWN,
@@ -25,7 +25,7 @@ void update_head_position();
 
 
 int main(){
-    while(game_over){
+    while(!game_over){
         build();
     }
     return 0;
@@ -49,7 +49,7 @@ void detect_move(){
                 current_direction = LEFT;
                 break;
             case 'q':
-                game_over = 0;
+                game_over = 1;
             default:
                 break;
         }
