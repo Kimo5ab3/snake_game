@@ -4,14 +4,50 @@
 
 const int WIDTH = 50;
 const int HEIGHT = 20;
+struct Position {
+    int x;
+    int y;
+};
+struct Position snake_head_position = {25, 10}; 
+void detect_move();
+void draw_full_row();
+void draw_first_last_item_row(int h);
+void build();
 
-//build environment
-void build_environment(){
-    // clear screen every loop
+
+int main(){
+    build();
+    return 0;
+};
+
+
+void detect_move(){
+    char key = getch();
+    switch(key){
+        case 'w':
+            snake_head_position.y --;
+            build();
+            break;
+        case 's':
+            snake_head_position.y ++;
+            build();
+            break;
+        case 'a':
+            snake_head_position.x --;
+            build();
+            break;
+        case 'd':
+            snake_head_position.x ++;
+            build();
+            break;
+        default:
+            break;
+    }
+}
+
+void build(){
     system("cls");
-
-    //draw full row
-    void full_row(){
+    void draw_full_row(){
     for (int i = 0; i <= WIDTH; i++){
         if(i == WIDTH){
                 printf("\n");
@@ -20,57 +56,29 @@ void build_environment(){
             }
         }  
     };
-    //draw first and last sign in a row
-    void draw_first_last_row(){
+    void draw_first_last_item_row(int h){
     for (int i = 0; i < WIDTH; i++){
             if(i == 0){
                 printf("0");
             } else if(i == WIDTH -1){
                 printf("0 \n");
             } else {
-                printf(" ");
+                if(snake_head_position.y == h && snake_head_position.x == i){
+                    printf("@");
+                } else {
+                    printf(" ");
+                }
             }
         } 
     };
 
-    //draw row by height
+    //build environment
     for(int h = 0; h <= HEIGHT; h++){
         if(h == 0 || h == HEIGHT){
-            full_row();
+            draw_full_row();
         } else {
-             draw_first_last_row();
+             draw_first_last_item_row(h);
         }
     }
-};
-
-void detect_move(){
-    char key = getch();
-    switch(key){
-        case 'w':
-            printf("UP");
-            break;
-        case 's':
-            printf("DOWN");
-            break;
-        case 'a':
-            printf("LEFT");
-            break;
-        case 'd':
-            printf("RIGHT");
-            break;
-        default:
-            break;
-    }
-}
-
-
-
-
-int main(){
-    while(1){
-        build_environment();
-        detect_move();
-    }
-    
-    return 0;
+    detect_move();
 };
