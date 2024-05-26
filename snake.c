@@ -8,6 +8,12 @@ struct Position {
     int x;
     int y;
 };
+enum Direction {
+    UP,
+    DOWN,
+    LEFT,
+    RIGHT 
+};
 struct Position snake_head_position = {25, 10}; 
 void detect_move();
 void draw_full_row();
