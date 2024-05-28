@@ -1,6 +1,7 @@
 #include <conio.h>
 #include <stdio.h>
 #include <stdlib.h>
+#include <windows.h>
 
 const int WIDTH = 50;
 const int HEIGHT = 20;
@@ -23,6 +24,7 @@ void set_head_new_position(int coordinate);
 int main() {
   while (!game_over) {
     build();
+    Sleep(1000 / 30);
   }
   return 0;
 };
@@ -93,8 +95,8 @@ void build() {
   printf("\n position y: %d", snake_head.y);
   printf("\n DIRECTION: %d", current_direction);
 
-  //   detect_move();
-  detect_move_debug();
+  detect_move();
+//   detect_move_debug();
 };
 
 void draw_full_row() {
@@ -151,14 +153,14 @@ void detect_end_of_field() {
   if (end_right || end_bottom) {
     set_head_new_position(1);
   } else if (end_left) {
-    set_head_new_position(WIDTH -2);
+    set_head_new_position(WIDTH - 2);
   } else if (end_top) {
-    set_head_new_position(HEIGHT -2);
+    set_head_new_position(HEIGHT - 2);
   }
 }
 
 void set_head_new_position(int coordinate) {
-    switch (current_direction) {
+  switch (current_direction) {
   case UP:
     snake_head.y = coordinate;
     break;
