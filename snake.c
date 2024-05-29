@@ -13,18 +13,20 @@ struct Position {
 };
 enum Direction current_direction = UP;
 struct Position snake_head = {25, 10};
+int body_counter = 1;
 void detect_move();
 void draw_full_row();
 void draw_first_last_item_row(int h);
-void build();
-void set_new_direction();
 void detect_end_of_field();
+void set_new_direction();
 void set_head_new_position(int coordinate);
+void build_body(int h);
+void build();
 
 int main() {
   while (!game_over) {
     build();
-    Sleep(1000 / 30);
+    Sleep(1000 / 10);
   }
   return 0;
 };
@@ -60,16 +62,26 @@ void detect_move() {
     char key = _getch();
     switch (key) {
     case 'w':
-      current_direction = UP;
+      if (current_direction != DOWN) {
+        current_direction = UP;
+      }
       break;
     case 's':
-      current_direction = DOWN;
+      if (current_direction != UP) {
+        current_direction = DOWN;
+      }
       break;
     case 'a':
-      current_direction = RIGHT;
+      if (current_direction != LEFT) {
+        current_direction = RIGHT;
+      }
+
       break;
     case 'd':
-      current_direction = LEFT;
+      if (current_direction != RIGHT) {
+        current_direction = LEFT;
+      }
+
       break;
     case 'q':
       game_over = 1;
@@ -96,7 +108,7 @@ void build() {
   printf("\n DIRECTION: %d", current_direction);
 
   detect_move();
-//   detect_move_debug();
+  //   detect_move_debug();
 };
 
 void draw_full_row() {
@@ -175,5 +187,11 @@ void set_head_new_position(int coordinate) {
     break;
   default:
     break;
+  }
+}
+
+void build_body(int h) {
+  if (current_direction == UP && h == snake_head.y + 1) {
+    printf("o");
   }
 }
