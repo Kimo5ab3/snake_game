@@ -19,7 +19,7 @@ struct BodyTail{
 };
 enum Direction current_direction = UP;
 struct Position snake_head = {25, 10};
-struct Position fruit = {20, 12};
+struct Position fruit = {25, 10};
 int body_counter = 5;
 void detect_move();
 void draw_full_row();
@@ -116,11 +116,11 @@ void build() {
   printf("\n \n \n position x: %d", snake_head.x);
   printf("\n position y: %d", snake_head.y);
   printf("\n DIRECTION: %d", current_direction);
-  printf("\n FRUIT: %d", fruit.x);
-  printf("\n FRUIT: %d", fruit.y);
+  printf("\n FRUIT X: %d", fruit.x);
+  printf("\n FRUIT Y: %d", fruit.y);
 
-  detect_move();
-  //   detect_move_debug();
+  // detect_move();
+  detect_move_debug();
 
 };
 
@@ -143,10 +143,12 @@ void draw_first_last_item_row(int h) {
       printf("\n");
     } else {
       if (snake_head.y == h && snake_head.x == i) {
-        if(fruit.x == h && fruit.y == i){
-          makeNewFruit();
-        }
+        if(snake_head.x == fruit.x && snake_head.y == fruit.y){
+        makeNewFruit();
+        printf("X");
+      } else {
         printf("o");
+      }
       } else if(fruit.y == h && fruit.y == i){
         printf("@");
       } else {
@@ -209,6 +211,6 @@ void set_head_new_position(int coordinate) {
 }
 
 void makeNewFruit(){
-    fruit.x = (rand() % WIDTH);
-    fruit.y = (rand() % HEIGHT);
+    fruit.x = rand() % WIDTH;
+    fruit.y = rand() % HEIGHT;
 }
