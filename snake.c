@@ -11,22 +11,30 @@ struct Position {
   int x;
   int y;
 };
+struct BodyTail{
+  int left;
+  int right;
+  int top;
+  int bottom;
+};
 enum Direction current_direction = UP;
 struct Position snake_head = {25, 10};
-int body_counter = 1;
+struct Position fruit = {20, 12};
+int body_counter = 5;
 void detect_move();
 void draw_full_row();
 void draw_first_last_item_row(int h);
 void detect_end_of_field();
 void set_new_direction();
 void set_head_new_position(int coordinate);
-void build_body(int h);
 void build();
+void makeNewFruit();
 
 int main() {
+  struct BodyTail bodyTail = {0, 0, 0, 0};
   while (!game_over) {
     build();
-    Sleep(1000 / 10);
+    Sleep(10000 / 120);
   }
   return 0;
 };
@@ -93,7 +101,9 @@ void detect_move() {
 
 void build() {
   set_new_direction();
+  
   system("cls");
+
   // build rows by height
   for (int h = 0; h < HEIGHT; h++) {
     if (h == 0 || h == HEIGHT - 1) {
@@ -106,9 +116,12 @@ void build() {
   printf("\n \n \n position x: %d", snake_head.x);
   printf("\n position y: %d", snake_head.y);
   printf("\n DIRECTION: %d", current_direction);
+  printf("\n FRUIT: %d", fruit.x);
+  printf("\n FRUIT: %d", fruit.y);
 
   detect_move();
   //   detect_move_debug();
+
 };
 
 void draw_full_row() {
@@ -130,6 +143,11 @@ void draw_first_last_item_row(int h) {
       printf("\n");
     } else {
       if (snake_head.y == h && snake_head.x == i) {
+        if(fruit.x == h && fruit.y == i){
+          makeNewFruit();
+        }
+        printf("o");
+      } else if(fruit.y == h && fruit.y == i){
         printf("@");
       } else {
         printf(" ");
@@ -190,8 +208,7 @@ void set_head_new_position(int coordinate) {
   }
 }
 
-void build_body(int h) {
-  if (current_direction == UP && h == snake_head.y + 1) {
-    printf("o");
-  }
+void makeNewFruit(){
+    fruit.x = (rand() % WIDTH);
+    fruit.y = (rand() % HEIGHT);
 }
