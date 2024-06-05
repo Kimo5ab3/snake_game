@@ -5,6 +5,7 @@
 
 const int WIDTH = 50;
 const int HEIGHT = 20;
+int points;
 int game_over = 0;
 enum Direction { UP, DOWN, LEFT, RIGHT };
 struct Position {
@@ -31,10 +32,11 @@ void build();
 void makeNewFruit();
 
 int main() {
+  points = 0;
   struct BodyTail bodyTail = {0, 0, 0, 0};
   while (!game_over) {
     build();
-    Sleep(10000 / 120);
+    Sleep(10000 / 240);
   }
   return 0;
 };
@@ -113,11 +115,14 @@ void build() {
     }
   }
 
-  printf("\n \n \n position x: %d", snake_head.x);
-  printf("\n position y: %d", snake_head.y);
-  printf("\n DIRECTION: %d", current_direction);
-  printf("\n FRUIT X: %d", fruit.x);
-  printf("\n FRUIT Y: %d", fruit.y);
+  printf("\n POINTS: %d", points);
+  // printf("\n \n \n position x: %d", snake_head.x);
+  // printf("\n position y: %d", snake_head.y);
+  // printf("\n DIRECTION: %d", current_direction);
+  // printf("\n FRUIT X: %d", fruit.x);
+  // printf("\n FRUIT Y: %d", fruit.y);
+
+
 
   detect_move();
   // detect_move_debug();
@@ -144,6 +149,7 @@ void draw_first_last_item_row(int h) {
     } else {
       if(snake_head.x == fruit.x && snake_head.y == fruit.y){
         makeNewFruit();
+        points += 10;
       }
       if(i == fruit.x && h == fruit.y){
         printf("@");
