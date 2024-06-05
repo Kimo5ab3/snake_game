@@ -119,8 +119,8 @@ void build() {
   printf("\n FRUIT X: %d", fruit.x);
   printf("\n FRUIT Y: %d", fruit.y);
 
-  // detect_move();
-  detect_move_debug();
+  detect_move();
+  // detect_move_debug();
 
 };
 
@@ -142,15 +142,13 @@ void draw_first_last_item_row(int h) {
     } else if (i == WIDTH) {
       printf("\n");
     } else {
-      if (snake_head.y == h && snake_head.x == i) {
-        if(snake_head.x == fruit.x && snake_head.y == fruit.y){
+      if(snake_head.x == fruit.x && snake_head.y == fruit.y){
         makeNewFruit();
-        printf("X");
-      } else {
-        printf("o");
       }
-      } else if(fruit.y == h && fruit.y == i){
+      if(i == fruit.x && h == fruit.y){
         printf("@");
+      } else if(i == snake_head.x && h == snake_head.y){
+        printf("o");
       } else {
         printf(" ");
       }
@@ -213,4 +211,7 @@ void set_head_new_position(int coordinate) {
 void makeNewFruit(){
     fruit.x = rand() % WIDTH;
     fruit.y = rand() % HEIGHT;
+    if(fruit.x == 0 || fruit.y == 0){
+      makeNewFruit();
+    }
 }
